@@ -6,4 +6,7 @@ class Restaurant(models.Model):
     score = models.IntegerField() #maybe create a review class
     review = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
