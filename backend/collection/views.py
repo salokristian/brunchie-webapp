@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from collection.models import Restaurant
 from collection.serializers import RestaurantSerializer
 
+
+
 @api_view(['GET', 'POST'])
 def restaurant_list(request):
     """
@@ -14,6 +16,16 @@ def restaurant_list(request):
         restaurants = Restaurant.objects.all()
         serializer = RestaurantSerializer(restaurants, many=True)
         return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = RestaurantSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def restaurant_details(request, pk):
