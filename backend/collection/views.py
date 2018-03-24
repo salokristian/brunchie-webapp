@@ -3,7 +3,7 @@ from collection.models import Restaurant
 from collection.serializers import RestaurantSerializer
 
 
-class restaurant_list(generics.ListCreateAPIView):
+class RestaurantList(generics.ListCreateAPIView):
     """
     List all restaurants or create a new one.
     """
@@ -11,7 +11,7 @@ class restaurant_list(generics.ListCreateAPIView):
     serializer_class = RestaurantSerializer
 
 
-class restaurant_details(generics.RetrieveUpdateDestroyAPIView):
+class RestaurantDetails(generics.RetrieveUpdateDestroyAPIView):
     """
     Retrieve, update or delete a restaurant.
     """
