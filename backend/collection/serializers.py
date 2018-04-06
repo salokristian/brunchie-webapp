@@ -1,5 +1,12 @@
 from rest_framework import serializers
-from collection.models import Restaurant, Serving
+from collection.models import Restaurant, Serving, BuffetMenu
+
+
+class BuffetMenuSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = BuffetMenu
+        fields = ('name', 'items', 'price', 'serving')
 
 
 class ServingSerializer(serializers.ModelSerializer):
@@ -7,8 +14,8 @@ class ServingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Serving
         fields = (
-            'pk', 'name', 'description',
-            'system', 'valid_until', 'restaurant'
+            'pk', 'name', 'description', 'occurs_at', 'system', 'valid_until',
+            'restaurant', 'buffet_menus', 'alacarte_dishes', 'reviews',
         )
 
 
