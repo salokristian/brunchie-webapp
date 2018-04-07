@@ -34,24 +34,24 @@ urlpatterns = [
     ),
     path(
         'servings/<int:pk_serv>/buffets/',
-        views.BuffetMenuList.as_view(),
+        views.ServingsBuffetMenuList.as_view(),
         name="get_post_buffets_of_serving"
     ),
-    # path(
-    #     'servings/alacartes/',
-    #     views.AlaCarteDishList.as_view(),
-    #     name="get_post_alacartes"
-    # ),
-    # path(
-    #     'servings/alacartes/<int:pk>/',
-    #     views.AlaCarteDishDetails.as_view(),
-    #     name="get_put_delete_alacartes"
-    # ),
-    # path(
-    #     'servings/<int:pk_serv>/alacartes/',
-    #     views.AlaCarteDishList.as_view(),
-    #     name="get_post_alacartes_of_serving"
-    # ),
+    path(
+        'servings/alacartes/',
+        views.AlaCarteDishList.as_view(),
+        name="get_post_alacartes"
+    ),
+    path(
+        'servings/alacartes/<int:pk>/',
+        views.AlaCarteDishDetails.as_view(),
+        name="get_put_delete_alacartes"
+    ),
+    path(
+        'servings/<int:pk_serv>/alacartes/',
+        views.ServingsAlaCarteDishList.as_view(),
+        name="get_post_alacartes_of_serving"
+    ),
     # path(
     #     'servings/occursats/',
     #     views.OccursAtList.as_view(),

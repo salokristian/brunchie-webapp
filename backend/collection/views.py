@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from collection.models import Restaurant, Serving, BuffetMenu
+from collection.models import Restaurant, Serving, BuffetMenu, AlaCarteDish
 from collection.serializers import (ServingSerializer,
-    RestaurantSerializer, BuffetMenuSerializer)
+    RestaurantSerializer, BuffetMenuSerializer, AlaCarteDishSerializer)
 
 
 class RestaurantList(generics.ListCreateAPIView):
@@ -23,7 +23,7 @@ class RestaurantDetails(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RestaurantSerializer
 
 
-class ServingList(generics.ListAPIView):
+class ServingList(generics.ListCreateAPIView):
     """
     List all servings.
     """
@@ -39,19 +39,12 @@ class ServingDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Serving.objects.all()
 
 
-class BuffetMenuList(generics.ListAPIView):
+class BuffetMenuList(generics.ListCreateAPIView):
     """
-    List all buffet menus, or the menus
-    of the serving with primary key=pk_serv.
+    List all buffet menus or create a new one.
     """
     serializer_class = BuffetMenuSerializer
-
-    def get_queryset(self):
-        filter = {}
-        filter['serving'] = self.kwargs.get('pk_serv', None)
-        if filter['serving']:
-            return BuffetMenu.objects.filter(**filter)
-        return BuffetMenu.objects.all()
+    queryset = BuffetMenu.objects.all()
 
 
 class BuffetMenuDetails(generics.RetrieveUpdateDestroyAPIView):
@@ -60,3 +53,43 @@ class BuffetMenuDetails(generics.RetrieveUpdateDestroyAPIView):
     """
     serializer_class = BuffetMenuSerializer
     queryset = BuffetMenu.objects.all()
+
+
+class ServingsBuffetMenuList(generics.ListAPIView):
+    """
+    List buffet menus of belonging to a serving with primary key=pk_serv.
+    """
+    serializer_class = BuffetMenuSerializer
+
+    def get_queryset(self):
+        filter = {}
+        filter['serving'] = self.kwargs.get('pk_serv', None)
+        return BuffetMenu.objects.filter(**filter)
+
+
+class AlaCarteDishList(generics.ListCreateAPIView):
+    """
+    List all ala carte dishes or create a new one.
+    """
+    serializer_class = AlaCarteDishSerializer
+    queryset = AlaCarteDish.objects.all()
+
+
+class AlaCarteDishDetails(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update or delete an ala carte dish.
+    """
+    serializer_class = AlaCarteDishSerializer
+    queryset = AlaCarteDish.objects.all()
+
+
+class ServingsAlaCarteDishList(generics.ListAPIView):
+    """
+    List all ala carte dishes belonging to a serving with primary key=pk_serv.
+    """
+    serializer_class = AlaCarteDishSerializer
+
+    def get_queryset(self):
+        filter = {}
+        filter['serving'] = self.kwargs.get('pk_serv', None)
+        return AlaCarteDish.objects.filter(**filter)

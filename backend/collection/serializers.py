@@ -1,12 +1,19 @@
 from rest_framework import serializers
-from collection.models import Restaurant, Serving, BuffetMenu
+from collection.models import Restaurant, Serving, BuffetMenu, AlaCarteDish
+
+
+class AlaCarteDishSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AlaCarteDish
+        fields = ('pk', 'name', 'description', 'price', 'serving')
 
 
 class BuffetMenuSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BuffetMenu
-        fields = ('name', 'items', 'price', 'serving')
+        fields = ('pk', 'name', 'items', 'price', 'serving')
 
 
 class ServingSerializer(serializers.ModelSerializer):
