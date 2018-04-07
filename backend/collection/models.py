@@ -102,7 +102,24 @@ class OccursAt(models.Model):
 
 class Review(models.Model):
     score = models.IntegerField()
+    headline = models.CharField(max_length=100)
     comment = models.TextField(max_length=1000)
+    review_datetime = models.DateTimeField(auto_now_add=True)
+    visited_date = models.DateField()
+
+    FRIENDS = 1
+    FAMILY = 2
+    WORK = 3
+    COUPLE = 4
+    OTHER = 5
+    VISIT_TYPE_CHOICES = (
+        (FRIENDS, "Friends"),
+        (FAMILY, "Family"),
+        (WORK, "Work"),
+        (COUPLE, "Couple"),
+        (OTHER, "Other"),
+    )
+    visit_type = models.IntegerField(choices=VISIT_TYPE_CHOICES)
     # a review is related to a restaurant via a serving by default
     serving = models.ForeignKey(
         Serving,
@@ -119,8 +136,6 @@ class Review(models.Model):
         null=True,
         related_name="reviews"
     )
-    review_datetime = models.DateTimeField(auto_now_add=True)
-    visited_date = models.DateField()
 
     def __str__(self):
         return "{}/5, {}".format(
