@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from collection.models import (Restaurant, Serving, BuffetMenu,
-    AlaCarteDish, OccursAt)
+    AlaCarteDish, OccursAt, Review)
 from collection.serializers import (ServingSerializer, RestaurantSerializer,
-    BuffetMenuSerializer, AlaCarteDishSerializer, OccursAtSerializer)
+    BuffetMenuSerializer, AlaCarteDishSerializer, OccursAtSerializer,
+    ReviewSerializer)
 
 
 class RestaurantList(generics.ListCreateAPIView):
@@ -122,3 +123,21 @@ class ServingsOccursAtList(generics.ListAPIView):
         filter = {}
         filter['serving'] = self.kwargs.get('pk_serv', None)
         return OccursAt.objects.filter(**filter)
+
+
+class ReviewList(generics.ListCreateAPIView):
+    """
+    List all reviews or create a new one.
+    The review_datetime field will be autofilled by the backend.
+    """
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+
+class ReviewDetails(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update or delete a review.
+    The review_datetime field cannot be updated.
+    """
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer

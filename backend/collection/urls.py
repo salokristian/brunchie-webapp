@@ -67,14 +67,14 @@ urlpatterns = [
         views.ServingsOccursAtList.as_view(),
         name="get_post_occursats_of_serving"
     ),
-    # path(
-    #     'reviews/',
-    #     views.ReviewList.as_view(),
-    #     name="get_post_reviews"
-    # ),
-    # path(
-    #     'reviews/<int:pk>/',
-    #     views.ReviewDetails.as_view(),
-    #     name="get_put_delete_review"
-    # ),
+    path(
+        'reviews/',
+        views.ReviewList.as_view(),
+        name="get_post_reviews"
+    ),
+    path(
+        'reviews/<int:pk>/',
+        views.ReviewDetails.as_view(),
+        name="get_put_delete_review"
+    ),
 ]
