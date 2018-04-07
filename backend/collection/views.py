@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from collection.models import Restaurant, Serving, BuffetMenu, AlaCarteDish
-from collection.serializers import (ServingSerializer,
-    RestaurantSerializer, BuffetMenuSerializer, AlaCarteDishSerializer)
+from collection.models import (Restaurant, Serving, BuffetMenu,
+    AlaCarteDish, OccursAt)
+from collection.serializers import (ServingSerializer, RestaurantSerializer,
+    BuffetMenuSerializer, AlaCarteDishSerializer, OccursAtSerializer)
 
 
 class RestaurantList(generics.ListCreateAPIView):
@@ -93,3 +94,31 @@ class ServingsAlaCarteDishList(generics.ListAPIView):
         filter = {}
         filter['serving'] = self.kwargs.get('pk_serv', None)
         return AlaCarteDish.objects.filter(**filter)
+
+
+class OccursAtList(generics.ListCreateAPIView):
+    """
+    List the occurrings of all servings or create a new one.
+    """
+    serializer_class = OccursAtSerializer
+    queryset = OccursAt.objects.all()
+
+
+class OccursAtDetails(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve, update or delete an occurring.
+    """
+    serializer_class = OccursAtSerializer
+    queryset = OccursAt.objects.all()
+
+
+class ServingsOccursAtList(generics.ListAPIView):
+    """
+    List all occurrings of a serving with primary key=pk_serv.
+    """
+    serializer_class = OccursAtSerializer
+
+    def get_queryset(self):
+        filter = {}
+        filter['serving'] = self.kwargs.get('pk_serv', None)
+        return OccursAt.objects.filter(**filter)

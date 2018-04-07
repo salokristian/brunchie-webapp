@@ -1,5 +1,13 @@
 from rest_framework import serializers
-from collection.models import Restaurant, Serving, BuffetMenu, AlaCarteDish
+from collection.models import (Restaurant, Serving,
+    BuffetMenu, AlaCarteDish, OccursAt)
+
+
+class OccursAtSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OccursAt
+        fields = ('pk', 'starts_at', 'ends_at', 'weekday', 'serving')
 
 
 class AlaCarteDishSerializer(serializers.ModelSerializer):

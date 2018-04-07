@@ -52,21 +52,21 @@ urlpatterns = [
         views.ServingsAlaCarteDishList.as_view(),
         name="get_post_alacartes_of_serving"
     ),
-    # path(
-    #     'servings/occursats/',
-    #     views.OccursAtList.as_view(),
-    #     name="get_post_occursats"
-    # ),
-    # path(
-    #     'servings/occursats/<int:pk>/',
-    #     views.OccursAtDetails.as_view(),
-    #     name="get_put_delete_occursats"
-    # ),
-    # path(
-    #     'servings/<int:pk_serv>/occursats/',
-    #     views.OccursAtList.as_view(),
-    #     name="get_post_occursats_of_serving"
-    # ),
+    path(
+        'servings/occursats/',
+        views.OccursAtList.as_view(),
+        name="get_post_occursats"
+    ),
+    path(
+        'servings/occursats/<int:pk>/',
+        views.OccursAtDetails.as_view(),
+        name="get_put_delete_occursats"
+    ),
+    path(
+        'servings/<int:pk_serv>/occursats/',
+        views.ServingsOccursAtList.as_view(),
+        name="get_post_occursats_of_serving"
+    ),
     # path(
     #     'reviews/',
     #     views.ReviewList.as_view(),
