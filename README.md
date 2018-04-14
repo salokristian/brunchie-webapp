@@ -6,4 +6,4 @@ Brunchie is web application that provides a listing of restaurants offering brun
 The application will consist of a Django back-end and a React front-end that are connected via RESTful API calls.
 
 ### Development status
-Currently the focus is in implementing the Django back-end, after which the frond-end will be created.  
+The backend is partially implemented, but it is lacking tests and features. Right now the app is not actively developed because the focus is on other projects.
