@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from collection.models import (Restaurant, Serving,
+from collection.models import (Restaurant, Serving, Image,
     BuffetMenu, AlaCarteDish, OccursAt, Review)
 
 
@@ -8,14 +8,14 @@ class ReviewSerializer(serializers.ModelSerializer):
     def validate_score(self, score):
         if 1 <= score <= 5:
             return score
-        raise serializers.ValidationError("The score must be in the range 1-5.")
+        raise serializers.ValidationError("The score must be between 1 and 5.")
 
     def validate_headline(self, headline):
         min_len = 10
         if len(headline) >= min_len:
             return headline
         raise serializers.ValidationError(
-            "The headline needs to be at least {} chars long.".format(min_len)
+            "The headline needs to be at least {} chars".format(min_len)
         )
 
     def validate_comment(self, comment):
@@ -35,8 +35,8 @@ class ReviewSerializer(serializers.ModelSerializer):
         both_set = data['restaurant'] and data['serving']
         if both_unset or both_set:
             raise serializers.ValidationError(
-                ("A review must have either a restaurant or a serving."
-                 " You had set {}.").format("neither" if both_unset else "both")
+                ("A review must have either a restaurant or a serving. "
+                 "You had set {}.").format("neither" if both_unset else "both")
             )
         return data
 
@@ -69,6 +69,18 @@ class BuffetMenuSerializer(serializers.ModelSerializer):
         fields = ('pk', 'name', 'items', 'price', 'serving')
 
 
+class ImageSerializer(serializers.ModelSerializer):
+
+    # validate that either restaurant or serving is chosen
+
+    class Meta:
+        model = Image
+        fields = (
+            'description', 'timestamp', 'file',
+            'restaurant', 'serving'
+        )
+
+
 class ServingSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -76,6 +88,7 @@ class ServingSerializer(serializers.ModelSerializer):
         fields = (
             'pk', 'name', 'description', 'occurs_at', 'system', 'valid_until',
             'restaurant', 'buffet_menus', 'alacarte_dishes', 'reviews',
+            'images',
         )
 
 
@@ -86,5 +99,5 @@ class RestaurantSerializer(serializers.ModelSerializer):
         model = Restaurant
         fields = (
             'pk', 'name', 'street_name',
-            'property_number', 'city', 'servings'
+            'property_number', 'city', 'servings', 'images'
         )

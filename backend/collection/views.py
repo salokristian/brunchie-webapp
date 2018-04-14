@@ -1,9 +1,9 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from collection.models import (Restaurant, Serving, BuffetMenu,
+from collection.models import (Restaurant, Serving, Image, BuffetMenu,
     AlaCarteDish, OccursAt, Review)
 from collection.serializers import (ServingSerializer, RestaurantSerializer,
-    BuffetMenuSerializer, AlaCarteDishSerializer, OccursAtSerializer,
+    ImageSerializer, BuffetMenuSerializer, AlaCarteDishSerializer, OccursAtSerializer,
     ReviewSerializer)
 
 
@@ -39,6 +39,11 @@ class ServingDetails(generics.RetrieveUpdateDestroyAPIView):
     """
     serializer_class = ServingSerializer
     queryset = Serving.objects.all()
+
+
+class ImageList(generics.ListCreateAPIView):
+    queryset = Image.objects.all()
+    serializer_class = ImageSerializer
 
 
 class BuffetMenuList(generics.ListCreateAPIView):

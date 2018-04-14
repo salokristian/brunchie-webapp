@@ -27,12 +27,31 @@ class Serving(models.Model):
         Restaurant,
         models.CASCADE,
         related_name="servings"
-        )
+    )
     system = models.IntegerField(choices=SYSTEM_CHOICES)
     valid_until = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return "{}, {}".format(self.name, self.restaurant.name)
+
+
+class Image(models.Model):
+    description = models.CharField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    file = models.ImageField()
+    restaurant = models.ForeignKey(
+        Restaurant,
+        models.CASCADE,
+        related_name="images"
+    )
+    serving = models.ForeignKey(
+        Serving,
+        models.CASCADE,
+        related_name="images"
+    )
+
+    def __str__(self):
+        return self.description
 
 
 class AlaCarteDish(models.Model):
@@ -104,7 +123,7 @@ class Review(models.Model):
     score = models.IntegerField()
     headline = models.CharField(max_length=100)
     comment = models.TextField(max_length=1000)
-    review_datetime = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     visited_date = models.DateField()
 
     FRIENDS = 1

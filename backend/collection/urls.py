@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from collection import views
 
 urlpatterns = [
@@ -21,6 +23,11 @@ urlpatterns = [
         'servings/<int:pk>/',
         views.ServingDetails.as_view(),
         name="get_put_delete_serving"
+    ),
+    path(
+        'images/',
+        views.ImageList.as_view(),
+        name="get_post_images"
     ),
     path(
         'servings/buffets/',
@@ -78,3 +85,6 @@ urlpatterns = [
         name="get_put_delete_review"
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
